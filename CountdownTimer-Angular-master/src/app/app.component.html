@@ -1,0 +1,55 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row class="toolbar-main">
+      <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="logo" [routerLink]="'/'">{{title}}</span>
+      <span class="flex-spacer"></span>
+      <div *ngIf="auth.user$ | async as user; else navBarNoAuth" fxShow="true" fxHide.lt-md="true">
+        <a mat-button [routerLink]="'/account'"> Hello, {{ user.displayName }} </a>
+        <a mat-button (click)="auth.signOut()"> Sign Out </a>
+        <a mat-button [routerLink]="'/events'"> Events </a>
+        <a mat-button [routerLink]="'/events/create'"> Create Event </a>
+      </div>
+    </mat-toolbar-row>
+    <!-- <mat-toolbar-row>
+        <span style="font-size: 12px;">Countdown Timer helps you track time left until an Event or Activity is Scheduled.</span>
+    </mat-toolbar-row> -->
+  </mat-toolbar>
+
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav #sidenav>
+    <mat-nav-list *ngIf="auth.user$ | async as user; else sideNavNoAuth">
+      <a (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
+      <a mat-button [routerLink]="'/'"> Home </a>
+      <a mat-button [routerLink]="'/account'"> Hello, {{ user.displayName }} </a>
+      <a mat-button (click)="auth.signOut()"> Sign Out </a>
+      <a mat-button [routerLink]="'/events'"> Events </a>
+      <a mat-button [routerLink]="'/events/create'"> Create Event </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content fxFlexFill>
+
+    <!-- Main Content -->
+    <router-outlet></router-outlet>
+        
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #navBarNoAuth>
+  <div fxShow="true" fxHide.lt-md="true">
+    <a mat-button (click)="auth.googleSignin()"> Log In </a>
+    <a mat-button [routerLink]="'/events'"> Events </a>
+    <a mat-button [routerLink]="'/events/create'"> Create Event </a>
+  </div>
+</ng-template>
+
+<ng-template #sideNavNoAuth>
+  <mat-nav-list>
+    <a (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
+    <a mat-button [routerLink]="'/'"> Home </a>
+    <a mat-button (click)="auth.googleSignin()"> Log In </a>
+    <a mat-button [routerLink]="'/events'"> Events </a>
+    <a mat-button [routerLink]="'/events/create'"> Create Event </a>
+  </mat-nav-list>
+</ng-template>

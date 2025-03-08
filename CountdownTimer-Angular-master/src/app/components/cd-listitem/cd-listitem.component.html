@@ -1,0 +1,44 @@
+<div class="center">
+    <mat-card class="feature-card">
+        <mat-card-header>
+            <ngx-avatar mat-card-avatar class="avatar-header-image" name="{{ data.subtitle }}"></ngx-avatar>
+            <!-- <div mat-card-avatar class="example-header-image"></div> -->
+            <mat-card-title>{{ data.title }}</mat-card-title>
+            <mat-card-subtitle *ngIf='data.subtitle'>{{ data.subtitle }}</mat-card-subtitle>
+            <span class="flex-spacer"></span>
+            <div class="center flip-s" fxHide="true" fxShow.gt fxShow.lg fxShow.md >
+                <app-flipdown [time_unix]='data.time_unix'></app-flipdown>
+            </div>
+        </mat-card-header>
+        <div class="center flip-l" fxShow="true" fxHide.gt fxHide.lg fxHide.md>
+            <app-flipdown [time_unix]='data.time_unix'></app-flipdown>
+        </div>
+        <mat-card-content *ngIf='data.content'>
+            <p>{{ data.content }}</p>
+            <p *ngIf='data.tags'>
+                <mat-chip-list aria-label="Tags">
+                    <!-- <b>Tags: </b> -->
+                    <mat-chip *ngFor='let tag of data.tags'>{{ tag }}</mat-chip>
+                    <span class="flex-spacer"></span>
+                    <div>
+                        <button mat-button click-stop-propagation [routerLink]='userUrl'>
+                            <img src="{{ userImage }}" width="32px">
+                            {{ username }}
+                        </button>
+                        <button *ngIf='auth.getUserID() == data.userID && data.isDeleted && data.userID != "guest-user"' (click)="restoreEvent()" mat-button click-stop-propagation><mat-icon>delete</mat-icon>Hidden</button>
+                        <button *ngIf='auth.getUserID() == data.userID && !data.isDeleted && data.userID != "guest-user"' (click)="deleteEvent()" mat-button click-stop-propagation><mat-icon>delete_outline</mat-icon>Visible</button>
+                        <button mat-button click-stop-propagation (click)="incrementCountInternal()"><mat-icon>favorite_border</mat-icon> {{ data.count }}</button>
+                        <button mat-button click-stop-propagation (click)="copyID()"><mat-icon>share</mat-icon></button>
+                    </div>
+                </mat-chip-list>
+            </p>
+        </mat-card-content>
+        <!-- <mat-card-actions>
+            <span class="flex-spacer"></span>
+            <button mat-button>TRACK</button>
+            <button mat-button>SHARE</button>
+        </mat-card-actions> -->
+    </mat-card>
+</div>
+
+

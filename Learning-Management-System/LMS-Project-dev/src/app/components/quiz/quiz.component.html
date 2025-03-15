@@ -1,0 +1,20 @@
+<div>
+  <h2>Quizzes</h2>
+
+  <div *ngFor="let quiz of quizzes; let i = index">
+    <h3>{{ quiz.title }}</h3>
+
+    <div *ngIf="quiz.questions?.length > 0; else noQuestions">
+      <div *ngFor="let question of quiz.questions">
+        <p>{{ question.text }}</p>
+        <input type="text" [(ngModel)]="userAnswers[question.id]" placeholder="Your Answer" />
+      </div>
+    </div>
+
+    <ng-template #noQuestions>
+      <p>No questions available.</p>
+    </ng-template>
+
+    <button (click)="submitQuiz()">Submit</button>
+  </div>
+</div>

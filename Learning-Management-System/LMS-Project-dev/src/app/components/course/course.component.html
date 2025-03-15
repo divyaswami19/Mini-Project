@@ -1,0 +1,17 @@
+<div>
+    <h2>Courses</h2>
+    <ul>
+      <li *ngFor="let course of courses">
+        <h3>{{ course.title }}</h3>
+        <p>{{ course.description }}</p>
+      </li>
+    </ul>
+  
+    <div>
+      <h3>Add New Course</h3>
+      <input [(ngModel)]="courseTitle" placeholder="Course Title" />
+      <textarea [(ngModel)]="courseDescription" placeholder="Course Description"></textarea>
+      <button (click)="addCourse()">Add Course</button>
+    </div>
+  </div>
+  
